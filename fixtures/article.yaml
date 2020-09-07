@@ -1,0 +1,78 @@
+App\Entity\Article:
+  article_{1..33}:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    createdAt: '<dateTimeBetween("-365 days", "now")>'
+    tags: ["@news"]
+
+  article_{34..63}:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    createdAt: '<dateTimeBetween("-365 days", "now")>'
+    tags: ["@ad"]
+
+  article_{63..73}:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    createdAt: '<dateTimeBetween("-365 days", "now")>'
+    tags: ["@calendar"]
+
+  article_{74..83}:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    createdAt: '<dateTimeBetween("-365 days", "now")>'
+    tags: ["@congrats"]
+
+  article_{84..93}:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    createdAt: '<dateTimeBetween("-365 days", "now")>'
+    tags: ["@protected"]
+
+  article_{93..115}:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    createdAt: '<dateTimeBetween("-365 days", "now")>'
+    tags: ["@news", "@ad"]
+
+  article_115:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    mediaObjects: ['@media_object_1', '@media_object_4']
+    tags: ["@news"]
+
+  article_116:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    mediaObjects: ['@media_object_2']
+    tags: ["@news"]
+
+  article_117:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    mediaObjects: ['@media_object_5']
+    tags: ["@news"]
+
+  article_118:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    mediaObjects: ['@media_object_6']
+    tags: ["@news"]
+
+  article_119:
+    title: '<sentence(5)>'
+    text: '<text()>'
+    previewText: '<sentence()>'
+    mediaObjects: ['@media_object_7']
+    tags: ["@news"]
+

@@ -1,0 +1,11 @@
+App\Entity\Tag:
+  news:
+    name: 'Новости'
+  ad:
+    name: 'Объявления'
+  protected:
+    name: 'Закрытая страница'
+  congrats:
+    name: 'Поздравления'
+  calendar:
+    name: 'Календарь'

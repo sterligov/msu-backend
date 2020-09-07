@@ -1,0 +1,33 @@
+App\Entity\Appeal:
+  appeal_{1..20}:
+    address: '<sentence()>'
+    department: '@administration'
+    phone: '<phoneNumber()>'
+    personType: 'Физическое лицо'
+    birthYear: '<numberBetween(1950, 2010)>'
+    fullName: '<firstName()> <lastName()>'
+    email: '<email()>'
+    message: '<text()>'
+    createdAt: '<dateTimeBetween("-365 days", "now")>'
+
+  appeal_{21..40}:
+    address: '<sentence()>'
+    department: '@library'
+    phone: '<phoneNumber()>'
+    personType: 'Физическое лицо'
+    birthYear: '<numberBetween(1950, 2010)>'
+    fullName: '<firstName()> <lastName()>'
+    email: '<email()>'
+    message: '<text()>'
+    createdAt: '<dateTimeBetween("-365 days", "now")>'
+
+  appeal_41:
+    address: '<sentence()>'
+    department: '@administration'
+    phone: '<phoneNumber()>'
+    personType: 'Физическое лицо'
+    birthYear: '<numberBetween(1950, 2010)>'
+    fullName: '<firstName()> <lastName()>'
+    email: '<email()>'
+    message: '<text()>'
+    mediaObject: '@media_object_3'

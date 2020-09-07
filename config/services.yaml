@@ -1,0 +1,76 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\EventListener\AppealListener:
+        class: App\EventListener\AppealListener
+        tags:
+            - # these are the basic options that define the entity listener
+                name: 'doctrine.orm.entity_listener'
+                event: 'postPersist'
+                entity: 'App\Entity\Appeal'
+
+#    App\EventListener\ResponseListener:
+#        class: App\EventListener\CacheRequestResponseListener
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+#            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    Symfony\Component\Mailer\MailerInterface: '@App\Services\Postman'
+
+    App\Serializer\MediaObjectNormalizer:
+        decorates: 'api_platform.jsonld.normalizer.item'
+        arguments: ['@App\Serializer\MediaObjectNormalizer.inner']
+
+    App\Swagger\SwaggerDecorator:
+        decorates: 'api_platform.swagger.normalizer.documentation'
+        arguments: ['@App\Swagger\SwaggerDecorator.inner']
+        autoconfigure: false
+
+#    app.msu_redis_provider:
+#        class: \Redis
+#        factory: ['App\Services\RedisCacheFactory', 'createConnection']
+#        arguments:
+#            - '%env(REDIS_URL)%'
+
+    Symfony\Component\Cache\Adapter\TagAwareAdapterInterface:
+        class: Symfony\Component\Cache\Adapter\TagAwareAdapter
+        arguments: ['@redis.cache', '@redis.cache']
+
+    acme_api.event.authentication_success_listener:
+        class: App\EventListener\AuthenticationSuccessListener
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+
+    ReCaptcha\ReCaptcha:
+        arguments: ['%env(RECAPTCHA_SECRET_KEY)%']
+        calls:
+            - [setExpectedHostname, ['%env(FRONTEND_HOST)%']]
+
+    App\DataProvider\ArticleItemDataProvider: ~
+
+

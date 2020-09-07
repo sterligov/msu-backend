@@ -1,0 +1,3 @@
+App\Entity\MediaObject:
+  media_object_{1..7}:
+    filename: '<current()>.jpg'

@@ -1,0 +1,48 @@
+image: docker:19.03.0
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+
+services:
+  - docker:19.03.0-dind
+
+stages:
+  - test
+  - deploy
+
+.before_script_template: &before_script_test_template
+  stage: test
+  before_script:
+    - apk add make
+    - apk add --no-cache docker-compose
+    - cp .env.test .env
+    - chmod +x ./test.sh
+    - ./test.sh
+  except:
+    - master
+
+unit-test:
+  <<: *before_script_test_template
+  script:
+    - make unit-tests
+
+functional-test:
+  <<: *before_script_test_template
+  script:
+    - make functional-tests
+
+deploy:
+  stage: deploy
+  before_script:
+    - apk add openssh-client
+    - mkdir -p ~/.ssh
+    - echo "${GITLAB_SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H "${GITLAB_HOST}" >> ~/.ssh/known_hosts
+    - chmod +x deploy.sh
+  script: ./deploy.sh
+  only:
+    - master

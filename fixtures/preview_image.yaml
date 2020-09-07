@@ -1,0 +1,13 @@
+App\Entity\PreviewImage:
+  preview_image_1:
+    article: '@article_115'
+    mediaObject: '@media_object_1'
+  preview_image_2:
+    article: '@article_116'
+    mediaObject: '@media_object_2'
+  preview_image_3:
+    article: '@article_118'
+    mediaObject: '@media_object_6'
+  preview_image_4:
+    article: '@article_119'
+    mediaObject: '@media_object_7'

@@ -1,0 +1,7 @@
+App\Entity\Email:
+  email_{1..2}:
+    email: '<email()>'
+    department: ['@administration']
+  email_{3..4}:
+    email: '<email()>'
+    department: ['@library']

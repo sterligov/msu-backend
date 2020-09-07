@@ -1,0 +1,11 @@
+App\Entity\User:
+  user_msu_admin:
+    username: 'msu'
+    roles: '[ROLE_ADMIN, ROLE_USER]'
+    password: '<encodePassword("App\Entity\User", "msu_pass")>'
+
+  user_msu:
+    username: 'msu_default_user'
+    roles: '[ROLE_USER]'
+    password: '<encodePassword("App\Entity\User", "msu_default_pass")>'
+

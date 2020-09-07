@@ -1,0 +1,7 @@
+App\Entity\Department:
+  administration:
+    name: 'Администрация'
+    emails: ['@email_1', '@email_2']
+  library:
+    name: 'Библиотека'
+    emails: ['@email_3', '@email_4']

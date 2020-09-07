@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <h3>Виртуальная приемная филиала МГУ</h3>
+
+        <p><b>ФИО:</b>{{ appeal.fullName }}</p>
+        <p><b>Год рождения:</b>{{ appeal.birthYear }}</p>
+        <p><b>Телефон:</b>{{ appeal.phone }}</p>
+        <p><b>Email:</b>{{ appeal.email }}</p>
+        <p><b>Лицо:</b>{{ appeal.personType }}</p>
+        <p><b>Адрес:</b>{{ appeal.address }}</p>
+        <p><b>Сообщение:</b></p>
+        <p>{{ appeal.message }}</p>
+
+        {% if appeal.mediaObject %}
+            <a href="{{ appeal.mediaObject.contentUrl }}" target="_blank">
+                Прикрепленный файл
+            </a>
+        {% endif %}
+
+        <hr/>
+
+        <i>
+            <p>Полную информацию о данном обращении можно посмотреть <a href="https://msu.uz/appeals/{{ appeal.id }}" target="_blank">здесь</a></p>
+            <p>Полную статистику обращения граждан можно посмотреть <a href="https://msu.uz/main/statistics" target="_blank">здесь</a></p>
+
+            <p>Для аутентификации используйте следующие данные<p>
+            <p><b>Логин:</b> msu</p>
+            <p><b>Пароль:</b> kjvjyjcjd17msu17</p>
+        </i>
+    </body>
+</html>

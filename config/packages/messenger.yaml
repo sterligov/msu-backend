@@ -1,0 +1,16 @@
+framework:
+    messenger:
+        transports:
+            failure_transport: failed
+            failed: "%env(MESSENGER_TRANSPORT_FAILED_DSN)%"
+            async:
+                dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+                retry_strategy:
+                    max_retries: 3
+                    delay: 1
+                    multiplier: 2
+                    max_delay: 0
+        routing:
+            App\Message\UserAppeal: async
+
+
