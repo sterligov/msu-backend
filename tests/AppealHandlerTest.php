@@ -50,19 +50,12 @@ class AppealHandlerTest extends ApiTestCase
             ->willReturn($this->returnValue($emails));
 
         $text = '<h1>Hello, world!</h1>';
-        $twig = $this->getMockBuilder(Environment::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['render'])
-            ->getMock();
-        $twig->method('render')
-            ->willReturn($text);
-
+        $twig = $this->createMock(Environment::class);
+        $twig->method('render')->willReturn($text);
 
         $urlResolver = $this->createMock(MediaObjectContentUrlResolver::class);
 
-        $mailer = $this->getMockBuilder(MailerInterface::class)
-            ->onlyMethods(['send'])
-            ->getMockForAbstractClass();
+        $mailer = $this->createMock(MailerInterface::class);
         $mailer->expects($this->once())->method('send');
 
         $handler = new AppealHandler($repository, $urlResolver, $mailer, $twig);
@@ -85,7 +78,7 @@ class AppealHandlerTest extends ApiTestCase
         $repository = $this->getMockBuilder(AppealRepository::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['find'])
-            ->addMethods(['getMediaObject', 'getDepartment', 'getEmails'])
+            ->setMethods(['getMediaObject', 'getDepartment', 'getEmails'])
             ->getMock();
 
         $repository
@@ -96,15 +89,10 @@ class AppealHandlerTest extends ApiTestCase
             ->method('getMediaObject')
             ->willReturn(null);
 
-        $twig = $this->getMockBuilder(Environment::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['render'])
-            ->getMock();
-        $twig->method('render')
-            ->willThrowException(new RuntimeError('Twig runtime error'));
+        $twig = $this->createMock(Environment::class);
+        $twig->method('render')->willThrowException(new RuntimeError('Twig runtime error'));
 
         $urlResolver = $this->createMock(MediaObjectContentUrlResolver::class);
-
         $mailer = $this->createMock(MailerInterface::class);
 
         $handler = new AppealHandler($repository, $urlResolver, $mailer, $twig);
