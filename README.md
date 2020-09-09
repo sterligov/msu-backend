@@ -1,7 +1,7 @@
 Media object scheme not ideal, but in the current conditions it's bearable. Fix it in future
 
-**For development**
-Use dev.sh
+**For start development environment**
+make development-env
 
-**For production**
-Use prod.sh
+**For start production environment**
+make production-env
