@@ -34,6 +34,14 @@ services:
                 event: 'postPersist'
                 entity: 'App\Entity\Appeal'
 
+#    App\EventListener\ArticleListener:
+#        class: App\EventListener\ArticleListener
+#        tags:
+#            - # these are the basic options that define the entity listener
+#                name: 'doctrine.orm.entity_listener'
+#                event: 'postPersist'
+#                entity: 'App\Entity\Article'
+
 #    App\EventListener\ResponseListener:
 #        class: App\EventListener\CacheRequestResponseListener
 #        tags:
@@ -72,5 +80,18 @@ services:
             - [setExpectedHostname, ['%env(FRONTEND_HOST)%']]
 
     App\DataProvider\ArticleItemDataProvider: ~
+
+    email_logger:
+        class: App\Logger\Email
+        arguments:
+            - denis0324@gmail.com
+
+#    Longman\TelegramBot\Telegram:
+#        arguments: ['%env(TGBOT_TOKEN)%', '%env(TGBOT_USERNAME)%']
+
+#    telegram_logger:
+#        class: App\Logger\Telegram
+#        arguments: ["@@msu_log"]
+
 
 
