@@ -6,8 +6,7 @@ namespace App\Controller;
 use App\DataProvider\ArticleItemDataProvider;
 use App\Entity\Article;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Security;
 
 class GetArticleBySlugAction
@@ -24,10 +23,8 @@ class GetArticleBySlugAction
         $article = $dataProvider->getItem(Article::class, $slug);
 
         if (!$article) {
-            throw new HttpException(Response::HTTP_NOT_FOUND, 'Not found');
+            throw new NotFoundHttpException();
         }
-
-        $security->isGranted('ARTICLE_VIEW', $article);
 
         return $article;
     }

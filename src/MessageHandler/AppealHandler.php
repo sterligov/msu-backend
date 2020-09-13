@@ -4,12 +4,10 @@
 namespace App\MessageHandler;
 
 
+use App\Entity\Appeal;
 use App\Message\UserAppeal;
-use App\Repository\AppealRepository;
 use App\Services\MediaObjectContentUrlResolver;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
@@ -23,15 +21,15 @@ class AppealHandler implements MessageHandlerInterface
 
     private ?Environment $twig = null;
 
-    private ?AppealRepository $appealRepository = null;
+    private ?EntityManagerInterface $entityManager = null;
 
     public function __construct(
-        AppealRepository $appealRepository,
+        EntityManagerInterface $entityManager,
         MediaObjectContentUrlResolver $urlResolver,
         MailerInterface $mailer,
         Environment $twig
     ) {
-        $this->appealRepository = $appealRepository;
+        $this->entityManager = $entityManager;
         $this->urlResolver = $urlResolver;
         $this->mailer = $mailer;
         $this->twig = $twig;
@@ -39,6 +37,7 @@ class AppealHandler implements MessageHandlerInterface
 
     /**
      * @param UserAppeal $userAppeal
+     * @return Email|null
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
@@ -47,7 +46,9 @@ class AppealHandler implements MessageHandlerInterface
     public function __invoke(UserAppeal $userAppeal): ?Email
     {
         $email = null;
-        $appeal = $this->appealRepository->find($userAppeal->getId());
+
+        $appealRepository = $this->entityManager->getRepository(Appeal::class);
+        $appeal = $appealRepository->find($userAppeal->getId());
 
         if ($appeal) {
             $file = $appeal->getMediaObject();

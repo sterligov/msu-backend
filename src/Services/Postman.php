@@ -16,9 +16,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Postman implements MailerInterface
 {
-    private const URL = '';
+    private const URL = 'http://postman.dvaoblaka.ru/email/send';
 
-    private const AUTH_TOKEN = '';
+    private const AUTH_TOKEN = '3fd72a8b9ac84d83aefa48058e8e5c7b';
 
     /**
      * @var HttpClientInterface
