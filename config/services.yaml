@@ -81,17 +81,20 @@ services:
 
     App\DataProvider\ArticleItemDataProvider: ~
 
+    Telegram\Bot\Api:
+        class: Telegram\Bot\Api
+        arguments:
+            - '%env(TGBOT_TOKEN)%'
+
     email_logger:
         class: App\Logger\Email
         arguments:
             - denis0324@gmail.com
 
-#    Longman\TelegramBot\Telegram:
-#        arguments: ['%env(TGBOT_TOKEN)%', '%env(TGBOT_USERNAME)%']
-
-#    telegram_logger:
-#        class: App\Logger\Telegram
-#        arguments: ["@@msu_log"]
+    telegram_logger:
+        class: App\Logger\Telegram
+        arguments:
+            - '%env(TG_CHANNEL_ID)%'
 
 
 

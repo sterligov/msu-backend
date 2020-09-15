@@ -4,6 +4,7 @@
 namespace App\Logger;
 
 
+use App\Logger\AbstractLogger;
 use Doctrine\ORM\EntityNotFoundException;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
@@ -11,14 +12,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Mailer\MailerInterface;
 
 
-class Email implements HandlerInterface
-{
-    private static array $exceptionList = [
-        NotFoundHttpException::class,
-        EntityNotFoundException::class,
-        \ApiPlatform\Core\Exception\InvalidArgumentException::class // TODO: fix it
-    ];
 
+class Email extends AbstractLogger implements HandlerInterface
+{
     private string $toEmail;
 
     private MailerInterface $mailer;
@@ -27,23 +23,6 @@ class Email implements HandlerInterface
     {
         $this->toEmail = $toEmail;
         $this->mailer = $mailer;
-    }
-
-    public function isHandling(array $record): bool
-    {
-        if (!in_array($record['level'], [Logger::CRITICAL, Logger::ERROR])) {
-            return false;
-        }
-
-        $isException = !empty($record['context']['exception']) && is_object($record['context']['exception']);
-
-        if (!$isException) {
-            return true;
-        }
-
-        $exceptionClass = get_class($record['context']['exception']);
-
-        return !in_array($exceptionClass, static::$exceptionList);
     }
 
     public function handle(array $record): bool
