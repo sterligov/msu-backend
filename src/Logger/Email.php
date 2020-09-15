@@ -27,26 +27,16 @@ class Email extends AbstractLogger implements HandlerInterface
 
     public function handle(array $record): bool
     {
-        if (!$this->isHandling($record)) {
-            return false;
+        if ($this->isHandling($record)) {
+            $email = (new \Symfony\Component\Mime\Email())
+                ->from('support@msu.uz')
+                ->to($this->toEmail)
+                ->subject('ERROR! msu.uz')
+                ->text($record['message']);
+
+            $this->mailer->send($email);
         }
 
-        $email = (new \Symfony\Component\Mime\Email())
-            ->from('support@msu.uz')
-            ->to($this->toEmail)
-            ->subject('ERROR! msu.uz')
-            ->text($record['message']);
-
-        $this->mailer->send($email);
-
         return false;
-    }
-
-    public function handleBatch(array $records): void
-    {
-    }
-
-    public function close(): void
-    {
     }
 }

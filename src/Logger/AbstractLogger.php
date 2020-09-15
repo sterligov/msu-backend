@@ -31,4 +31,12 @@ abstract class AbstractLogger
 
         return !in_array($exceptionClass, static::$exceptionList);
     }
+
+    public function handleBatch(array $records): void
+    {
+    }
+
+    public function close(): void
+    {
+    }
 }

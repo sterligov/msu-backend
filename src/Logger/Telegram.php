@@ -22,23 +22,13 @@ class Telegram extends AbstractLogger implements HandlerInterface
 
     public function handle(array $record): bool
     {
-        if (!$this->isHandling($record)) {
-            return false;
+        if ($this->isHandling($record)) {
+            $this->api->sendMessage([
+                'chat_id' => $this->chatID,
+                'text' => $record['message']
+            ]);
         }
 
-        $this->api->sendMessage([
-            'chat_id' => $this->chatID,
-            'text' => $record['message']
-        ]);
-
         return false;
-    }
-
-    public function handleBatch(array $records): void
-    {
-    }
-
-    public function close(): void
-    {
     }
 }
