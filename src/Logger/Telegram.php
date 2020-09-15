@@ -31,7 +31,7 @@ class Telegram extends AbstractLogger implements HandlerInterface
             'text' => $record['message']
         ]);
 
-        return true;
+        return false;
     }
 
     public function handleBatch(array $records): void

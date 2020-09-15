@@ -39,7 +39,7 @@ class Email extends AbstractLogger implements HandlerInterface
 
         $this->mailer->send($email);
 
-        return true;
+        return false;
     }
 
     public function handleBatch(array $records): void
