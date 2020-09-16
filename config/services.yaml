@@ -90,11 +90,14 @@ services:
         class: App\Logger\Email
         arguments:
             - denis0324@gmail.com
+            - '@monolog.processor.psr_log_message'
 
     telegram_logger:
         class: App\Logger\Telegram
         arguments:
             - '%env(TG_CHANNEL_ID)%'
+            - '@monolog.processor.psr_log_message'
+
 
 
 
